@@ -34,15 +34,16 @@
 }
 
 .navbar li:hover {
-  color: #666; 
-  border-color: #666;
-  background-color: #ddd;
+  color: #ee8e85; 
+  border-color: #ee8e85;
+  background-color: #ee8e85;
 } 
  
 .navbar li.selected-parent, 
 .navbar li.selected {
-  color: #222; 
-  border-color: #222;
+  color: #4decb4; 
+  border-color: #4decb4;
+  background-color: #ee8e85;
 }
 
 .navbar ul ul {
@@ -70,6 +71,7 @@
 }
 
 .navbar li li.selected {
-  color: #222; 
-  border-color: #222;
+  color: #4decb4; 
+  border-color: #4decb4;
+  background-color: #ee8e85
 }

@@ -98,6 +98,5 @@ jQuery(function() {
    *
    */
   //slideShow.init();
-  slideShow.init({"cssId" : "#slideshow", "durationPause" : 4000, "durationSlide" : 2000, "durationFirst" : 4000});
-
+  slideShow.init({"cssId" : "#slideshow", "durationPause" : 2000, "durationSlide" : 2000, "durationFirst" : 1000});
 });

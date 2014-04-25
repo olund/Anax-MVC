@@ -13,19 +13,19 @@ return [
 
         // This is a menu item
         'home'  => [
-            'text'  => 'Home',   
-            'url'   => 'index.php',  
-            'title' => 'Some title 1'
+            'text'  => '<i class="fa fa-home"></i> Home',
+            'url'   => '',
+            'title' => 'Home'
         ],
  
         // This is a menu item
-        'test'  => [
-            'text'  => 'Test with submenu',   
-            'url'   => 'test.php',   
-            'title' => 'Some title 2',
+        'redovisning'  => [
+            'text'  => '<i class="fa fa-edit"></i> Redovisning',
+            'url'   => 'redovisning',
+            'title' => 'Redovisning',
 
             // Here we add the submenu, with some menu items, as part of a existing menu item
-            'submenu' => [
+          /*  'submenu' => [
 
                 'items' => [
 
@@ -43,26 +43,32 @@ return [
                         'title' => 'Some item 2'
                     ],
                 ],
-            ],
+            ], */
+        ],
+
+        'theme' => [
+            'text'  => '<i class="fa fa-picture-o"></i> Tema',
+            'url'   => 'theme',
+            'title' => 'Tema',
         ],
  
         // This is a menu item
-        'about' => [
-            'text'  =>'About', 
-            'url'   =>'about.php',  
-            'title' => 'Some title 3'
+        'source' => [
+            'text'  =>'<i class="fa fa-wrench"></i> Source',
+            'url'   =>'source',
+            'title' => 'Source'
         ],
     ],
  
     // Callback tracing the current selected menu item base on scriptname
-    'callback' => function($url) {
+    'callback' => function ($url) {
         if ($url == $this->di->get('request')->getRoute()) {
             return true;
         }
     },
 
     // Callback to create the urls
-    'create_url' => function($url) {
+    'create_url' => function ($url) {
         return $this->di->get('url')->create($url);
     },
 ];

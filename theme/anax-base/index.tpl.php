@@ -11,7 +11,7 @@
 <script src='<?=$this->url->asset($modernizr)?>'></script>
 </head>
 
-<body>
+<body class=''>
 
 <div id='wrapper'>
 
