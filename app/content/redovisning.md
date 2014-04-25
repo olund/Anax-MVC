@@ -78,25 +78,30 @@ Kmom03: Bygg ett eget tema
 
 
 
-####CSS-Ramverk
 
+####CSS-Ramverk
+Jag har använt twitter bootstrap förut. Tycker det är kanon med ett CSS-ramverk för en som har noll talang i styling av hemsidor. Med bootstrap är det väldigt enkelt att komma igång och få det "snyggt". Dock kan hemsidor som använder bootstrap bli väldigt lika. En liten nackdel blir det när ett ramverk blir så stort så att de flesta hemsidor har liknande styling...
 
 
 ####LESS, lessphp och Semantic.gs
-
-
-
-####Gridbaserad layout, vertikalt och horisontellt
-
+Lessphp är guds gåva. Att slippa behöva kompilera Less till Css själv var riktigt bekvämt. Om jag inte hade använt lessphp hade jag nog laddat ner ett plugin till sublime som kompilerar åt mig.
+LESS var mycket roligare att arbeta i än CSS. Att kunna använda variabler, inbyggda funktioner (Lighten, Darken) var fantastiskt. Att CSS inte har implementerat det förut är väldigt konstigt. 
 
 
 ####Font awesome, Bootstrap, Normalize
-
-
+Som jag skrev ovan tycker jag bootstrap både är bra och dåligt. Boostrap använder sig av Normalize och även ett font paket (Glyphicons) som liknar Font Awesome. 
+Om man inte kan design, använd Font Awesome/Bootstrap och Normalize!
 
 ####Mitt tema
 
+Ja.. Lånat lite, skrivit lite själv. 
+Som vanligt är det svårt att få till något bra designmässigt.
+Jag ändrade navbaren, A, I, IMG länkar och la till så att man kunde lägga till styling på html och body taggarna.
 
+
+####Tankar..
+
+Det var jobbigt men även lärorikt kursmoment och jag har fått nya kunskaper som kommer garanterat användas. Speciellt Less känns riktigt bra att kunna.
 
 
 
