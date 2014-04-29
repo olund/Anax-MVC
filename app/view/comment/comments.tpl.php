@@ -20,6 +20,7 @@
 
 
 			<form method=post class='comment'>
+				<input type=hidden name="key" value="<?=$key?>">
 			    <input type=hidden name="redirect" value="<?=$this->url->create($this->request->getCurrentUrl())?>">
 				<input type=hidden name="id" value="<?=$id?>">
                 <input class="btn" type='submit' name='doRemove' value='Delete' onclick="this.form.action = '<?= $this->url->create('comment/remove') ?>'">

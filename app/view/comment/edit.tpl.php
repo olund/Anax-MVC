@@ -2,6 +2,7 @@
     <form method=post>
         <input type=hidden name="redirect" value="<?=$this->url->create('redovisning')?>">
         <input type='hidden' name='id' value='<?=$id?>'/>
+        <input type='hidden' name='key' value='<?=$key?>'>
         <h1>ID: <?=$id?></h1>
 
         <fieldset>

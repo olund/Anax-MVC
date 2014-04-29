@@ -17,15 +17,16 @@ class CommentController implements \Anax\DI\IInjectionAware
      *
      * @return void
      */
-    public function viewAction()
+    public function viewAction($key = null)
     {
         $comments = new \Phpmvc\Comment\CommentsInSession();
         $comments->setDI($this->di);
 
-        $all = $comments->findAll();
+        $all = $comments->findAll($key);
 
         $this->views->add('comment/comments', [
             'comments' => $all,
+            'key'      => $key,
         ]);
     }
 
@@ -55,8 +56,10 @@ class CommentController implements \Anax\DI\IInjectionAware
  
         $comments = new \Phpmvc\Comment\CommentsInSession();
         $comments->setDI($this->di);
+        // Get the key
+        $key = $this->request->getPost('key');
 
-        $comments->add($comment);
+        $comments->add($comment, $key);
         $this->response->redirect($this->request->getPost('redirect'));
     }
 
@@ -77,9 +80,9 @@ class CommentController implements \Anax\DI\IInjectionAware
 
         $comments = new \Phpmvc\Comment\CommentsInSession();
         $comments->setDI($this->di);
-
-        $comments->deleteAll();
-
+        
+        $key = $this->request->getPost('key');
+        $comments->deleteAll($key);
         $this->response->redirect($this->request->getPost('redirect'));
     }
 
@@ -91,7 +94,11 @@ class CommentController implements \Anax\DI\IInjectionAware
 
         $comments = new \Phpmvc\Comment\CommentsInSession();
         $comments->setDI($this->di);
-        $comments->delete($this->request->getPost('id'));
+        
+        $id = $this->request->getPost('id');
+        $key = $this->request->getPost('key');
+        
+        $comments->delete($id, $key);
         $this->response->redirect($this->request->getPost('redirect'));
     }
 
@@ -106,9 +113,12 @@ class CommentController implements \Anax\DI\IInjectionAware
         $comments->setDI($this->di);
 
         $id = $this->request->getPost('id');
-        $comment = $comments->find($id);
+        $key = $this->request->getPost('key');
+
+        $comment = $comments->find($id, $key);
         
-        // Lägg till id på en kommentar.
+        // Lägg till id och key på en kommentar.
+        $comment['key'] = $key;
         $comment['id'] = $id;
 
         $this->views->add('comment/edit', $comment);
@@ -133,7 +143,8 @@ class CommentController implements \Anax\DI\IInjectionAware
         $comments->setDI($this->di);
        
         $id = $this->request->getPost('id');
-        $comments->save($comment, $id);
+        $key = $this->request->getPost('key');
+        $comments->save($comment, $id, $key);
         $this->response->redirect($this->request->getPost('redirect'));
     }
 }

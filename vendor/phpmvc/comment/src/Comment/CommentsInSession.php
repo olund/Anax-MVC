@@ -19,10 +19,10 @@ class CommentsInSession implements \Anax\DI\IInjectionAware
      * 
      * @return void
      */
-    public function add($comment)
+    public function add($comment, $key = null)
     {
         $comments = $this->session->get('comments', []);
-        $comments[] = $comment;
+        $comments[$key][] = $comment;
         $this->session->set('comments', $comments);
     }
 
@@ -33,9 +33,12 @@ class CommentsInSession implements \Anax\DI\IInjectionAware
      *
      * @return array with all comments.
      */
-    public function findAll()
+    public function findAll($key = null)
     {
-        return $this->session->get('comments', []);
+        $comments = $this->session->get('comments', []);
+        if(isset($comments[$key])) {
+            return $comments[$key];
+        }
     }
 
      /**
@@ -43,10 +46,10 @@ class CommentsInSession implements \Anax\DI\IInjectionAware
      *
      * @return a comment.
      */
-    public function find($id) 
+    public function find($id, $key) 
     {
         $comments = $this->session->get('comments', []);
-        return $comments[$id];
+        return $comments[$key][$id];
     }
 
 
@@ -56,9 +59,16 @@ class CommentsInSession implements \Anax\DI\IInjectionAware
      *
      * @return void
      */
-    public function deleteAll()
+    public function deleteAllInSession()
     {
         $this->session->set('comments', []);
+    }
+
+    public function deleteAll($key)
+    {
+        $comments = $this->session->get('comments', []);
+        $comments[$key] = [];
+        $this->session->set('comments', $comments);
     }
     
     /**
@@ -66,19 +76,19 @@ class CommentsInSession implements \Anax\DI\IInjectionAware
      * @param int $id the id.
      * @return void
      */
-    public function delete($id) 
+    public function delete($id, $key = null) 
     {
         // Get all comments.
         $comments = $this->session->get('comments', []);
         // Remove the comment.
-        unset($comments[$id]);
+        unset($comments[$key][$id]);
         // Set the new array.
         $this->session->set('comments', $comments);
     }
 
-    public function save($comment, $id = null) {
+    public function save($comment, $id = null, $key = null) {
         $comments = $this->session->get('comments', []);
-        $comments[$id] = $comment;
+        $comments[$key][$id] = $comment;
         $this->session->set('comments', $comments);
     }
 }
