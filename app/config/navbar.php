@@ -51,6 +51,12 @@ return [
             'url'   => 'theme',
             'title' => 'Tema',
         ],
+
+        'Users' => [
+            'text'  => '<i class="fa fa-user"></i> Användare',
+            'url'   => 'users.php',
+            'title' => 'Användare',
+        ],
  
         // This is a menu item
         'source' => [

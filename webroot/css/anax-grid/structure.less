@@ -27,7 +27,12 @@ body.chill {
     margin-bottom: 22px;
 }
 
-
+#wrapper-header {
+  margin: 0 auto;
+  width: @columns;
+  padding: 10px;
+  max-width: 960px;
+}
 
 #main {
     .column(@columns / 3 * 2);
@@ -227,3 +232,10 @@ a {
         margin-bottom: @magicNumber;
     }  
 }
+
+
+.right { float: right;}
+.left { float: left;}
+.middle { margin: 0 auto;}
+.clear { clear: both;}
+.divider { width: 100%; height: 10px;} 

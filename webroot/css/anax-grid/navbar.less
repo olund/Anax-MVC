@@ -2,7 +2,24 @@
  * Based on http://dbwebb.se/coachen/en-navbar-med-drop-down-meny-i-ren-html-och-css
  * Changed to only style li-items instead of a.
  */
-.navbar {}
+
+#navbar {
+    background-color: #F5F5F5;
+    margin-bottom: 20px;
+    -webkit-transition: all .4s ease-out;
+    -moz-transition: all .4s ease-out;
+    -o-transition: all .4s ease-out;
+    transition: all .4s ease-out;}
+.navbar {
+    border-radius: 4px;
+    margin: 0 auto;
+    max-width: 100%;
+    margin: @columns;
+    -webkit-transition: all .4s ease-out;
+    -moz-transition: all .4s ease-out;
+    -o-transition: all .4s ease-out;
+    transition: all .4s ease-out;
+}
  
 .navbar ul {
   list-style: none; 
@@ -14,7 +31,13 @@
   display: inline-block;
   border-bottom: 4px solid transparent; 
   color: #333; 
-  position: relative; 
+  position: relative;
+  font-size: 18px;
+  -webkit-transition: all .2s ease-out;
+  -moz-transition: all .2s ease-out;
+  -o-transition: all .2s ease-out;
+  transition: all .2s ease-out;
+
 }
  
 .navbar a {
@@ -24,6 +47,25 @@
   text-decoration: none;
   color: inherit;
   white-space: nowrap; 
+}
+
+.navbar li:hover,
+.navbar li.selected:hover {
+  color: #666; 
+  background-color: #E5E5E5;
+  -webkit-transition: all .2s ease-out;
+  -moz-transition: all .2s ease-out;
+  -o-transition: all .2s ease-out;
+  transition: all .2s ease-out;
+}
+
+.navbar li:hover i,
+.navbar li.selected:hover i {
+  color: #f18d05;
+  -webkit-transition: all .2s ease-out;
+  -moz-transition: all .2s ease-out;
+  -o-transition: all .2s ease-out;
+  transition: all .2s ease-out;
 }
 
 .navbar li:hover {
@@ -46,6 +88,7 @@
 }
  
 .navbar li li {
+    width: 100%;
   border-top: none;  
   border-left: 4px solid transparent;  
 }

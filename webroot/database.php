@@ -17,61 +17,7 @@ $di->setShared('db', function() {
 });
 
 
-// Setup route
 
-$app->router->add('setup', function () use ($app) {
-    $app->theme->setTitle('Setup db');
-    $app->db->setVerbose(true);
-
-    // Drop table if exist
-    $app->db->dropTableIfExists('user')->execute();
-
-    // Create a user table
-    $app->db->createTable(
-        'user',
-        [
-            'id' => ['integer', 'primary key', 'not null', 'auto_increment'],
-            'acronym' => ['varchar(20)', 'unique', 'not null'],
-            'email' => ['varchar(80)'],
-            'name' => ['varchar(80)'],
-            'password' => ['varchar(255)'],
-            'created' => ['datetime'],
-            'updated' => ['datetime'],
-            'deleted' => ['datetime'],
-            'active' => ['datetime'],
-        ]
-    )->execute();
-
-
-    // Add 2 users
-    $app->db->insert(
-        'user',
-        ['acronym', 'email', 'name', 'password', 'created', 'active']
-    );
-
-    // Get the date?
-    $now = date(DATE_RFC2822);
-
-    // Execute the query
-    $app->db->execute([
-        'admin',
-        'admin@test.se',
-        'Administrator',
-        password_hash('admin', PASSWORD_DEFAULT),
-        $now,
-        $now
-    ]);
-
-    $app->db->execute([
-        'doe',
-        'doe@test.se',
-        'John Doe',
-        password_hash('doe', PASSWORD_DEFAULT),
-        $now,
-        $now
-    ]);
-
-});
 
 $app->router->add('', function() use ($app) {
 

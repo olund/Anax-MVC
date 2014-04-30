@@ -16,8 +16,8 @@
 <div id='wrapper'>
 
 	<div id='header'>
-	<?php if(isset($header)) echo $header?>
-	<?php $this->views->render('header')?>
+		<?php if(isset($header)) echo $header?>
+		<?php $this->views->render('header')?>
 	</div>
 
 	<?php if ($this->views->hasContent('navbar')) : ?>
