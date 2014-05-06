@@ -2,8 +2,6 @@
 
 require __DIR__.'/config_with_app.php';
 
-
-
 $di->setShared('db', function () {
     $db = new \Mos\Database\CDatabaseBasic();
     $db->setOptions(require ANAX_APP_PATH . 'config/database_mysql.php');

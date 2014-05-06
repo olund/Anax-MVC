@@ -34,6 +34,9 @@
 
             <?php $url = $this->url->create('users/update/' . $properties['id']) ?>
             <td><a href="<?=$url?>" title="Edit"> <i class="fa fa-pencil-square-o"></i> </a></td>
+            
+            <?php $url = $this->url->create('users/status/' . $properties['id']) ?>
+            <td><a href="<?=$url?>" title="Active/Inactive"> <i class="fa fa-check"></i> </a></td>
 
             <?php $url = $this->url->create('users/soft-delete/' . $properties['id']) ?>
             <td><a href="<?=$url?>" title="Soft-delete"> <i class="fa fa-trash-o"></i> </a></td>

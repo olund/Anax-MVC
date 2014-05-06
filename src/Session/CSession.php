@@ -96,4 +96,18 @@ class CSession
     {
         return isset($_SESSION[$key]);
     }
+
+      /**
+     * Unset values in session.
+     *
+     * @param string $key   in session variable.
+     *
+     * @return mixed
+     */
+    public function noSet($key)
+    {
+        if (isset($_SESSION[$key])) {
+            session_unset($_SESSION[$key]);
+        }
+    }
 }

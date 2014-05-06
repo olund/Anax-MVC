@@ -37,7 +37,7 @@ class CDispatcherBasic implements \Anax\DI\IInjectionAware
         $name = str_replace(['-', '_'], ' ', $name);
         $name = ucwords($name);
         $name = str_replace(' ', '', $name);
-        
+
         return $name;
     }
 
@@ -123,10 +123,11 @@ class CDispatcherBasic implements \Anax\DI\IInjectionAware
      */
     public function dispatch()
     {
+        /*
         $handler = [$this->controller, 'initialize'];
         if (is_callable($handler)) {
             call_user_func($handler);
-        }
+        }*/
 
         $handler = [$this->controller, $this->action];
         return call_user_func_array($handler, $this->params);
@@ -149,7 +150,7 @@ class CDispatcherBasic implements \Anax\DI\IInjectionAware
         $action = isset($forward['action'])
             ? $forward['action']
             : null;
-        
+
         $params = isset($forward['params'])
             ? $forward['params']
             : [];

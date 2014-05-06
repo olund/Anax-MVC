@@ -5,18 +5,27 @@ require __DIR__.'/config_with_app.php';
 //$app->theme->configure(ANAX_APP_PATH . 'config/theme_me.php');
 $app->theme->configure(ANAX_APP_PATH . 'config/theme-grid.php');
 $app->navbar->configure(ANAX_APP_PATH . 'config/navbar.php');
-
+$app->session;
 $app->url->setUrlType(\Anax\Url\CUrl::URL_CLEAN);
+$di->set('form', '\Mos\HTMLForm\CForm');
 
 // Comments setup
 // Add stylesheet for comments.
 $app->theme->addStylesheet('css/comments.css');
 
+// Använd nyskapad Comment och commentcontroller...
 $di->set('CommentController', function () use ($di) {
-    $controller = new Phpmvc\Comment\CommentController();
+    $controller = new \Anax\Comments\CommentController();
     $controller->setDI($di);
 
     return $controller;
+});
+
+$di->setShared('db', function () {
+    $db = new \Mos\Database\CDatabaseBasic();
+    $db->setOptions(require ANAX_APP_PATH . 'config/database_mysql.php');
+    $db->connect();
+    return $db;
 });
 
 $app->router->add('', function () use ($app) {
@@ -38,7 +47,6 @@ $app->router->add('', function () use ($app) {
 $app->router->add('redovisning', function () use ($app) {
 
     $app->theme->setTitle("Redovisning");
-
     $content = $app->fileContent->get('redovisning.md');
     $content = $app->textFilter->doFilter($content, 'shortcode, markdown');
 
@@ -55,15 +63,93 @@ $app->router->add('redovisning', function () use ($app) {
         'action'     => 'view',
     ]);
 
-    $app->views->add('comment/form', [
-        'mail'      => null,
-        'web'       => null,
-        'name'      => null,
-        'content'   => null,
-        'output'    => null,
-        'id'      => null,
+
+    $name = isset($_SESSION['data']['name']) ? $_SESSION['data']['name'] : null;
+    $text = isset($_SESSION['data']['content']) ? $_SESSION['data']['content'] : null;
+    $email = isset($_SESSION['data']['email']) ? $_SESSION['data']['email'] : null;
+    $web = isset($_SESSION['data']['web']) ? $_SESSION['data']['web'] : null;
+    $url = isset($_SESSION['data']['url']) ? $_SESSION['data']['url'] : null;
+    $id = isset($_SESSION['data']['id']) ? $_SESSION['data']['id'] : null;
+
+    $app->session->noSet('data');
+
+    // Form
+    $form = $app->form;
+    $form = $form->create(['id' => 'form-link'], [
+        'id' => [
+            'type' => 'hidden',
+            'value' => isset($id) ? $id : null,
+            'required' => false,
+        ],
+        'url' => [
+            'type' => 'hidden',
+            'value' => $app->request->getCurrentUrl(),
+            'required' => false,
+        ],
+        'name' => [
+            'type'        => 'text',
+            'label'       => 'Name:',
+            'required'    => true,
+            'value'       => isset($name) ? $name : null,
+            'validation'  => ['not_empty'],
+        ],
+        'text' => [
+            'type'        => 'textarea',
+            'label'       => 'Comment:',
+            'required'    => true,
+            'value'       => isset($text) ? $text : null,
+            'validation'  => ['not_empty'],
+        ],
+        'email' => [
+            'type'        => 'email',
+            'label'       => 'Email:',
+            'required'    => true,
+            'value'       => isset($email) ? $email : null,
+            'validation'  => ['email_adress'],
+        ],
+        'web' => [
+            'type'        => 'url',
+            'label'       => 'Website:',
+            'required'    => false,
+            'value'       => isset($web) ? $web : null,
+        ],
+        'submit' => [
+            'type'      => 'submit',
+            'callback'  => function($form) {
+                $form->saveInSession = true;
+                return true;
+            }
+        ],
     ]);
 
+    $status = $form->check();
+
+    if ($status === true) {
+        $name = $_SESSION['form-save']['name']['value'];
+        $text = $_SESSION['form-save']['text']['value'];
+        $email = $_SESSION['form-save']['email']['value'];
+        $web = $_SESSION['form-save']['web']['value'];
+        $url = $_SESSION['form-save']['url']['value'];
+        $id = $_SESSION['form-save']['id']['value'];
+
+        session_unset($_SESSION['form-save']);
+
+        if (!empty($id)) {
+            $app->dispatcher->forward([
+                'controller' => 'comments',
+                'action'     => 'save',
+                'params'     => [$name, $text, $email, $web, $id],
+            ]);
+        } else{
+            $app->dispatcher->forward([
+                'controller' => 'comments',
+                'action'     => 'add',
+                'params'     => [$name, $text, $email, $web, $url],
+            ]);
+        }
+    }
+
+    $app->views->addString('<div class="comments">' . $form->getHTML() . '</div>', 'sidebar');
 });
 
 

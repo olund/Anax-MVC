@@ -5,20 +5,16 @@ namespace Anax\Users;
 class UsersController implements \Anax\DI\IInjectionAware
 {
     use \Anax\DI\TInjectable;
-
     public function initialize()
     {
         // Kallas automagist
         $this->users = new \Anax\Users\User();
         $this->users->setDI($this->di);
-
-
     }
 
     public function listAction()
     {
         $all = $this->users->findAll();
-
         $this->theme->setTitle('List all users');
         $this->views->add('users/list-all', [
             'users'	=>	$all,
@@ -57,16 +53,16 @@ class UsersController implements \Anax\DI\IInjectionAware
             $url = $this->url->create('users/id/' . $id);
             $this->response->redirect($url);
         } elseif ($status === false) {
-            
+
         }
-        
+
         $this->views->add('users/id', [
                 'user' => $user,
                 'title' => 'View user',
                 'content' => $form->getHTML(),
 
         ]);
-        
+
     }
 
     public function addAction($acronym = null)
@@ -98,12 +94,12 @@ class UsersController implements \Anax\DI\IInjectionAware
                 $url = $this->url->create('users/add/' . $acronym);
                 session_unset($_SESSION['form-save']);
                 $this->response->redirect($url);
-            
+
             }
             $this->views->add('me/page', [
                 'content' => $form->getHTML(),
             ]);
-            
+
         } else {
             $now = date("Y-m-d h:i:s");
 
@@ -168,8 +164,7 @@ class UsersController implements \Anax\DI\IInjectionAware
     public function inactiveAction()
     {
         $all = $this->users->query()
-        ->where('deleted IS NOT NULL')
-        ->andWhere('active IS NULL')
+        ->where('active IS NULL')
         ->execute();
 
         $this->theme->setTitle('Inactive users');
@@ -218,7 +213,7 @@ class UsersController implements \Anax\DI\IInjectionAware
                     $this->users->save([
                        'acronym' => $form->Value('acronym'),
                        'email' => $form->Value('email'),
-                       'name' => $form->Value('name'), 
+                       'name' => $form->Value('name'),
                     ]);
 
                     return true;
@@ -288,7 +283,7 @@ class UsersController implements \Anax\DI\IInjectionAware
     public function softDeletedAction()
     {
         $this->theme->setTitle('Papperskorgen');
-        
+
         $all = $this->users->query()
         ->where('deleted IS NOT NULL')
         ->execute();
@@ -299,10 +294,9 @@ class UsersController implements \Anax\DI\IInjectionAware
         ]);
     }
 
-
     // SÄTTER OM EN ANVÄNDARE ÄR AKTIV ELLER EJ.
     public function statusAction($id)
-    {   
+    {
         $user = $this->users->find($id);
         if(!isset($id)) {
             die('Id är inte satt');
