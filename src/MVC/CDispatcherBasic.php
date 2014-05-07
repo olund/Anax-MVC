@@ -123,12 +123,10 @@ class CDispatcherBasic implements \Anax\DI\IInjectionAware
      */
     public function dispatch()
     {
-        /*
         $handler = [$this->controller, 'initialize'];
         if (is_callable($handler)) {
             call_user_func($handler);
-        }*/
-
+        }
         $handler = [$this->controller, $this->action];
         return call_user_func_array($handler, $this->params);
     }

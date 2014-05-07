@@ -2,7 +2,6 @@
 
 namespace Anax\Comments;
 
-
 /**
  * Model for Comments
  */

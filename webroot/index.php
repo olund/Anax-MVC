@@ -2,24 +2,11 @@
 
 require __DIR__.'/config_with_app.php';
 
-//$app->theme->configure(ANAX_APP_PATH . 'config/theme_me.php');
 $app->theme->configure(ANAX_APP_PATH . 'config/theme-grid.php');
 $app->navbar->configure(ANAX_APP_PATH . 'config/navbar.php');
 $app->session;
 $app->url->setUrlType(\Anax\Url\CUrl::URL_CLEAN);
 $di->set('form', '\Mos\HTMLForm\CForm');
-
-// Comments setup
-// Add stylesheet for comments.
-$app->theme->addStylesheet('css/comments.css');
-
-// Använd nyskapad Comment och commentcontroller...
-$di->set('CommentController', function () use ($di) {
-    $controller = new \Anax\Comments\CommentController();
-    $controller->setDI($di);
-
-    return $controller;
-});
 
 $di->setShared('db', function () {
     $db = new \Mos\Database\CDatabaseBasic();
@@ -28,9 +15,16 @@ $di->setShared('db', function () {
     return $db;
 });
 
+// Använd nyskapad Comment och commentcontroller...
+$di->set('CommentsController', function () use ($di) {
+    $controller = new \Anax\Comments\CommentsController();
+    $controller->setDI($di);
+    return $controller;
+});
+
+
 $app->router->add('', function () use ($app) {
     $app->theme->setTitle('Me-sida');
-
     $content = $app->fileContent->get('me.md');
     $content = $app->textFilter->doFilter($content, 'shortcode, markdown');
 
@@ -40,12 +34,10 @@ $app->router->add('', function () use ($app) {
     $app->views->add('me/page', [
         'content' => $content,
         'byline'  => $byline,
-    ]);
-
+    ], 'main');
 });
 
 $app->router->add('redovisning', function () use ($app) {
-
     $app->theme->setTitle("Redovisning");
     $content = $app->fileContent->get('redovisning.md');
     $content = $app->textFilter->doFilter($content, 'shortcode, markdown');
@@ -55,14 +47,15 @@ $app->router->add('redovisning', function () use ($app) {
     $app->views->add('me/page', [
         'content' => $content,
         'byline' => $byline,
-    ]);
+    ], 'main');
 
     // Comments
     $app->dispatcher->forward([
-        'controller' => 'comment',
+        'controller' => 'comments',
         'action'     => 'view',
     ]);
 
+    $form = $app->form;
 
     $name = isset($_SESSION['data']['name']) ? $_SESSION['data']['name'] : null;
     $text = isset($_SESSION['data']['content']) ? $_SESSION['data']['content'] : null;
@@ -73,18 +66,16 @@ $app->router->add('redovisning', function () use ($app) {
 
     $app->session->noSet('data');
 
-    // Form
-    $form = $app->form;
     $form = $form->create(['id' => 'form-link'], [
         'id' => [
-            'type' => 'hidden',
-            'value' => isset($id) ? $id : null,
-            'required' => false,
+            'type'        => 'hidden',
+            'value'       => isset($id) ? $id : null,
+            'required'    => false,
         ],
         'url' => [
-            'type' => 'hidden',
-            'value' => $app->request->getCurrentUrl(),
-            'required' => false,
+            'type'        => 'hidden',
+            'value'       => $app->request->getCurrentUrl(),
+            'required'    => false,
         ],
         'name' => [
             'type'        => 'text',
@@ -120,11 +111,21 @@ $app->router->add('redovisning', function () use ($app) {
                 return true;
             }
         ],
+        'reset' => [
+            'type'      => 'reset',
+            'callback'  => function($form) {
+                $form->saveInSession = false;
+                return true;
+            }
+        ],
     ]);
 
+    // Check the status of the form
     $status = $form->check();
 
     if ($status === true) {
+
+        // What to do if the form was submitted?
         $name = $_SESSION['form-save']['name']['value'];
         $text = $_SESSION['form-save']['text']['value'];
         $email = $_SESSION['form-save']['email']['value'];
@@ -149,7 +150,7 @@ $app->router->add('redovisning', function () use ($app) {
         }
     }
 
-    $app->views->addString('<div class="comments">' . $form->getHTML() . '</div>', 'sidebar');
+    $app->views->addString('<div class="article1">' . $form->getHTML() . '</div>', 'sidebar');
 });
 
 
@@ -191,11 +192,6 @@ $app->router->add('source', function () use ($app) {
     ]);
 });
 
-// Test av sessions.
-$app->router->add('session', function () use ($app) {
-    $app->theme->setTitle('session check');
-    dump($app->session);
-});
 
 $app->router->handle();
 $app->theme->render();

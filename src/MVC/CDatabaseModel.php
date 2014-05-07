@@ -82,6 +82,12 @@ class CDatabaseModel implements \Anax\DI\IInjectionAware
         return $this->db->execute([$id]);
     }
 
+    public function deleteAll()
+    {
+        $this->db->delete($this->getSource());
+        return $this->db->execute([]);
+    }
+
     public function getProperties()
     {
         $properties = get_object_vars($this);

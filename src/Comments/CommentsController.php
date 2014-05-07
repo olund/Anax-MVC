@@ -4,13 +4,14 @@ namespace Anax\Comments;
 /**
  * A controller for Comments
  */
-class CommentController implements \Anax\DI\IInjectionAware
+class CommentsController implements \Anax\DI\IInjectionAware
 {
     use \Anax\DI\TInjectable;
     /**
      * Initialize the controller
      * @return void
      */
+
     public function initialize()
     {
         $this->comments = new \Anax\Comments\Comment();
@@ -23,10 +24,15 @@ class CommentController implements \Anax\DI\IInjectionAware
      */
     public function viewAction()
     {
+        $this->initialize();
         $all = $this->comments->findAll();
         $this->views->add('comments/comments', [
             'comments' => $all,
         ], 'sidebar');
+
+        //$this->views->add('comments/comments', [
+        //    'comments' => $all,
+        //]);
     }
 
     /**
@@ -39,6 +45,7 @@ class CommentController implements \Anax\DI\IInjectionAware
      */
     public function addAction($name = null, $content = null, $email = null, $web = null, $url = null)
     {
+        $this->initialize();
         if (!isset($name)) {
             die('Name is missing..');
         }
@@ -58,6 +65,7 @@ class CommentController implements \Anax\DI\IInjectionAware
 
     public function saveAction($name = null, $content = null, $email = null, $web = null, $id = null)
     {
+        $this->initialize();
         if (!isset($id)) {
             die("Missing id");
         }
@@ -88,6 +96,7 @@ class CommentController implements \Anax\DI\IInjectionAware
      */
     public function updateAction($id)
     {
+        $this->initialize();
         if (!isset($id)) {
             die("Missing id");
         }
@@ -118,6 +127,7 @@ class CommentController implements \Anax\DI\IInjectionAware
      */
     public function deleteAction($id = null)
     {
+        $this->initialize();
         if (!isset($id)) {
             die("Missing id");
         }
@@ -134,12 +144,8 @@ class CommentController implements \Anax\DI\IInjectionAware
      */
     public function deleteAllAction()
     {
+        $this->initialize();
         $this->comments->deleteAll();
-
         $this->response->redirect($_SERVER['HTTP_REFERER']);
     }
-
-
-
-
 }
