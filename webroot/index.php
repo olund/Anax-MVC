@@ -2,9 +2,11 @@
 
 require __DIR__.'/config_with_app.php';
 
+// Start session.
+$app->withSession();
+
 $app->theme->configure(ANAX_APP_PATH . 'config/theme-grid.php');
 $app->navbar->configure(ANAX_APP_PATH . 'config/navbar.php');
-$app->session;
 $app->url->setUrlType(\Anax\Url\CUrl::URL_CLEAN);
 $di->set('form', '\Mos\HTMLForm\CForm');
 

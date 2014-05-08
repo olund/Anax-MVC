@@ -110,16 +110,87 @@ Det var jobbigt men även lärorikt kursmoment och jag har fått nya kunskaper s
 
 Kmom04: Databasdrivna modeller
 ------------------------------------
-Svårt kursmoment. Men nu förstår man bättre hur man ska jobba med Anax-MVC.
+Svårt kursmoment. Men nu förstår man helt klart bättre hur man ska jobba med Anax-MVC.
+
+Pros:
+    Äntligen använder vi en databas istället för session för kommentarer!
+    Vi har en databas klass!
+    Snyggare kommentarer
+Cons:
+    Blev ingen extra uppgift för min del.. Ingen tid eller ork, skulle vara jävligt trevligt att använda scaffolding i framtiden.
+
+När man jobbade med Users kontrollern och modellen fick man verkligen upp ögonen hur allt hänger ihop..
+Att urlen mappas till /users/list vid listAction() i kontrollern och att kontrollern styr hur modellen fungerar..
+Ibörjan hade jag feting routes istället för att lägga in det i kontrollern. Blev nog så eftersom jag hade kollat på hur de andra hade implementerat det.
+Men när jag pratade mos på torsdags-lektionen fick man upp ögonen att det skulle ligga i UserControllern istället och det blev helt klart mer logiskt.
+
+
+####Problem:
+Problem med initialize() metoden, förstod ej att den kallades automagiskt i början,
+så i varje "action" metod kallade jag på this->initialize() när man ej behövde det.
+
+Lite konstigt att båda ha inaktiv och soft deleted IMO.
+Men förstår varför man har det, men jag skulle nog inte göra likadant på ett eget projekt eftersom båda blir nästan samma sak.
+När en användare blir Inaktiv borde han även vara soft-deleted, så tänker jag.
+
+
+Skulle skrivit såhär på alla actions.
+Istället för att lägga all kod i if ($status === true)...
+men har ingen ork till att ändra så jävla många...
+```
+ 'submit' => [
+    'type' => 'submit',
+    'callback' => function ($form) {
+    // Spara till databas
+    $this->users->save([
+        'acronym' => $form->Value('acronym'),
+        'email' => $form->Value('email'),
+        'name' => $form->Value('name'),
+    ]);
+    return true;
+
+
+if ($status == true) {
+    $url = $this->url->create('users/list');
+    $this->response->redirect($url);
+}
+
+```
+
+
+Felstavning vid CommentsController. Stavade utan s... Väldigt många kryptiska fel.. Dock blev felen lättare att läsa
+när mos uppdaterade Anax med bättre exceptions?
+```
+$di->set('CommentsController', function () use ($di) {
+    $controller = new \Anax\Comments\CommentsController();
+    $controller->setDI($di);
+    return $controller;
+});
+```
+
+
 
 ####Formulärhantering
+CForm var väldigt trevlig att arbeta med, man skapade formulär väldigt enkelt och snabbt.
+När syntaxen fastnade i huvudet skrev man formulär under minuten, väldigt stort +.
+
+Den var lite jobbig med URLer, att man måste skriva med "https://" (http://website.com), att det inte räcker med "www.google.se"
+blev man lite lack på. Så nu är URL inte ett måste att skriva när man skapar en ny kommentar.
+
 ####Databashanteringen
+Smidigt till max, föredrar lätt denna arbetssättet istället för att skriva hela sql frågan förhand.
+
+
+```
+// Kan det bli lättare att skriva SQL-kod??? Jag tror inte det:)
+$this->db->delete($this->getSource());
+return $this->db->execute([]);
+```
+
 ####Kommentarer i databasen.
+Äntlige, ÄNTLIGEN. Slipper alla problem som sessioner inför..
 
 
+Nu använder jag även  [Gravatar](http://sv.gravatar.com/) för att hämta bilder till kommentarer.
 
-Kmom05:
-------------------------------------
-Notes:
 
-Skapar en 'flash'
