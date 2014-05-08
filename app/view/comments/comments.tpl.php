@@ -1,5 +1,5 @@
 <div class='article1'>
-    <h2>Comments <?php if(!empty($comments)) : ?> - <a href="<?=$this->url->create('comments/delete-all')?>" title="Remove all">Remove all</a> <?php endif ;?> </h2>
+    <h3>Comments <?php if(!empty($comments)) : ?> - <a href="<?=$this->url->create('comments/delete-all')?>" title="Remove all">Remove all</a> <?php endif ;?> </h3>
     <div class='comments'>
         <?php foreach ($comments as $comment) : ?>
 

@@ -10,8 +10,6 @@ class CommentController implements \Anax\DI\IInjectionAware
 {
     use \Anax\DI\TInjectable;
 
-
-
     /**
      * View all comments.
      *
@@ -21,7 +19,7 @@ class CommentController implements \Anax\DI\IInjectionAware
     {
         $comments = new \Phpmvc\Comment\CommentsInSession();
         $comments->setDI($this->di);
-
+        $this->theme->setTitle("View all");
         $all = $comments->findAll($key);
 
         $this->views->add('comment/comments', [
@@ -40,11 +38,11 @@ class CommentController implements \Anax\DI\IInjectionAware
     public function addAction()
     {
         $isPosted = $this->request->getPost('doCreate');
-       
+
         if (!$isPosted) {
             $this->response->redirect($this->request->getPost('redirect'));
         }
- 
+
         $comment = [
             'content' => $this->request->getPost('content'),
             'name' => $this->request->getPost('name'),
@@ -53,7 +51,7 @@ class CommentController implements \Anax\DI\IInjectionAware
             'timestamp' => time(),
             'ip' => $this->request->getServer('REMOTE_ADDR'),
         ];
- 
+
         $comments = new \Phpmvc\Comment\CommentsInSession();
         $comments->setDI($this->di);
         // Get the key
@@ -73,42 +71,42 @@ class CommentController implements \Anax\DI\IInjectionAware
     public function removeAllAction()
     {
         $isPosted = $this->request->getPost('doRemoveAll');
-        
+
         if (!$isPosted) {
             $this->response->redirect($this->request->getPost('redirect'));
         }
 
         $comments = new \Phpmvc\Comment\CommentsInSession();
         $comments->setDI($this->di);
-        
+
         $key = $this->request->getPost('key');
         $comments->deleteAll($key);
         $this->response->redirect($this->request->getPost('redirect'));
     }
 
-    public function removeAction() 
+    public function removeAction()
     {
         if(!$this->request->getPost('doRemove')) {
             $this->response->redirect($this->request->getPost('redirect'));
-        } 
+        }
 
         $comments = new \Phpmvc\Comment\CommentsInSession();
         $comments->setDI($this->di);
-        
+
         $id = $this->request->getPost('id');
         $key = $this->request->getPost('key');
-        
+
         $comments->delete($id, $key);
         $this->response->redirect($this->request->getPost('redirect'));
     }
 
 
-    public function editAction() 
+    public function editAction()
     {
         if(!$this->request->getPost('doEdit')) {
            $this->response->redirect($this->request->getPost('redirect'));
-        } 
-            
+        }
+
         $comments = new \Phpmvc\Comment\CommentsInSession();
         $comments->setDI($this->di);
 
@@ -116,14 +114,14 @@ class CommentController implements \Anax\DI\IInjectionAware
         $key = $this->request->getPost('key');
 
         $comment = $comments->find($id, $key);
-        
+
         // Lägg till id och key på en kommentar.
         $comment['key'] = $key;
         $comment['id'] = $id;
 
         $this->views->add('comment/edit', $comment);
     }
-    
+
     public function saveAction()
     {
         if(!$this->request->getPost('doSave')) {
@@ -141,7 +139,7 @@ class CommentController implements \Anax\DI\IInjectionAware
 
         $comments = new \Phpmvc\Comment\CommentsInSession();
         $comments->setDI($this->di);
-       
+
         $id = $this->request->getPost('id');
         $key = $this->request->getPost('key');
         $comments->save($comment, $id, $key);

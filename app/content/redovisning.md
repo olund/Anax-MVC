@@ -57,10 +57,10 @@ Ytterligare ett problem uppstår...
 
 Jag hade problem med att editera den första kommentaren, alla andra fungerade. ID blev fel? Efter många försök och ändringar i CommentController och CommentsInSession löstes problemet och jag blev överlycklig.
 
-`(14:18:37) (@Olund) Jag LÖSTE DET`
-
-`(14:24:57) (@Bobbzorzen) Belöna dig själv med en chokladboll ;P`
-
+```
+(14:18:37) (@Olund) Jag LÖSTE DET
+(14:24:57) (@Bobbzorzen) Belöna dig själv med en chokladboll ;P
+```
 ####Begrepp
 Svårt var det. Svårt att förstå hur allt hänger ihop.
 Att `<?=$this->url->create('comment/add')?>` mappas till addAction metoden i CommentController klassen var riktigt snyggt, fast svårt att jobba med.
@@ -108,11 +108,18 @@ Det var jobbigt men även lärorikt kursmoment och jag har fått nya kunskaper s
 
 
 
+Kmom04: Databasdrivna modeller
+------------------------------------
+Svårt kursmoment. Men nu förstår man bättre hur man ska jobba med Anax-MVC.
+
+####Formulärhantering
+####Databashanteringen
+####Kommentarer i databasen.
 
 
 
+Kmom05:
+------------------------------------
+Notes:
 
-
-
-
-
+Skapar en 'flash'

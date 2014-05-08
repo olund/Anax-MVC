@@ -12,7 +12,7 @@ class CFlashBasic
      * Properties
      *
      */
-    private $message;
+    protected $message;
 
 
 
@@ -20,7 +20,7 @@ class CFlashBasic
      * Set a message.
      *
      * @param string a message.
-     *     
+     *
      * @return void
      */
     public function setMessage($message)
