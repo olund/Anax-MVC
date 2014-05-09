@@ -1,14 +1,15 @@
 <?php
 
-namespace Anax\Kernel;
+namespace Anax\MVC;
 
 /**
- * Anax base class for an application.
+ * Anax base class for wrapping sessions.
  *
  */
-class CAnax
+class CApplicationBasic
 {
-    use \Anax\DI\TInjectable;
+    use \Anax\DI\TInjectable,
+        \Anax\MVC\TRedirectHelpers;
 
 
 
