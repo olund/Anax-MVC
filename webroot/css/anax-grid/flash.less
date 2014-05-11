@@ -1,25 +1,26 @@
-@bg : yellow;
-@error: red;
-@success: green;
-@notice: orange;
-@warning: yellow;
+@color: #555;
+
+.errorMessage, .successMessage, .noticeMessage, .warningMessage {
+    margin: 10px 0px;
+    padding: 8px;
+}
 
 .errorMessage {
-    color: @error;
-    background-color: @bg;
+    color: @color;
+    background-color: #ffecec;
 }
 
 .successMessage {
-    color: @success;
-    background-color: @bg;
+    color: @color;
+    background-color: #e9ffd9;
 }
 
 .noticeMessage {
-    color: @notice;
-    background-color: @bg;
+    color: @color;
+    background-color: #e3f7fc;
 }
 
 .warningMessage {
-    color: @warning;
-    background-color: @bg;
+    color: @color;
+    background-color: #fff8c4;
 }

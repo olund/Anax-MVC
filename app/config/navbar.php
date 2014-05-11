@@ -7,7 +7,7 @@ return [
 
     // Use for styling the menu
     'class' => 'navbar',
- 
+
     // Here comes the menu strcture
     'items' => [
 
@@ -17,7 +17,7 @@ return [
             'url'   => '',
             'title' => 'Home'
         ],
- 
+
         // This is a menu item
         'redovisning'  => [
             'text'  => '<i class="fa fa-edit"></i> Redovisning',
@@ -31,15 +31,15 @@ return [
 
                     // This is a menu item of the submenu
                     'item 1'  => [
-                        'text'  => 'Item 1',   
-                        'url'   => 'item1.php',  
+                        'text'  => 'Item 1',
+                        'url'   => 'item1.php',
                         'title' => 'Some item 1'
                     ],
 
                     // This is a menu item of the submenu
                     'item 2'  => [
-                        'text'  => 'Item 2',   
-                        'url'   => 'item2.php',  
+                        'text'  => 'Item 2',
+                        'url'   => 'item2.php',
                         'title' => 'Some item 2'
                     ],
                 ],
@@ -52,12 +52,17 @@ return [
             'title' => 'Tema',
         ],
 
-        'Users' => [
+        'users' => [
             'text'  => '<i class="fa fa-user"></i> Användare',
             'url'   => 'users.php',
             'title' => 'Användare',
         ],
- 
+        'flash' => [
+            'text' => '<i class="fa fa-flash"></i> Flash',
+            'url' => 'flash',
+            'title' => 'Flash',
+        ],
+
         // This is a menu item
         'source' => [
             'text'  =>'<i class="fa fa-wrench"></i> Source',
@@ -65,7 +70,7 @@ return [
             'title' => 'Source'
         ],
     ],
- 
+
     // Callback tracing the current selected menu item base on scriptname
     'callback' => function ($url) {
         if ($url == $this->di->get('request')->getRoute()) {
