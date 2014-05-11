@@ -10,17 +10,14 @@ class CFlash extends \Anax\Flash\CFlashBasic
         'success' => 'fa-check',
         'error' => 'fa-times-circle',
     ];
-
+    /**
+     * Constructor, sets the session.
+     */
     public function __construct()
     {
         if (!isset($_SESSION['flash'])) {
             $_SESSION['flash'] = [];
         }
-    }
-
-    public function clearKey($key)
-    {
-        unset($_SESSION['flash'][$key]);
     }
 
     /**
@@ -49,11 +46,6 @@ class CFlash extends \Anax\Flash\CFlashBasic
             'type' => $key,
             'message' => $value,
         ];
-    }
-
-    private function getKey($key)
-    {
-        return $_SESSION['flash'][$key];
     }
 
     /**
